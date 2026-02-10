@@ -26,10 +26,10 @@ public class ShopController {
     public List<Item> getAll() {
         Item badge = new Item(
                 "1",
-                "Premium Badge",
+                "Kubek Ocipieje",
                 "Earned by completing 10 benefits",
-                "https://picsum.photos/600/400?random=1&category=business",
-                499);   // 4.99 USD
+                "/images/cup.webp",
+                50);
 
         Item coffee = new Item(
                 "2",
