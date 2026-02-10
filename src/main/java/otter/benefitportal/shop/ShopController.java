@@ -43,8 +43,71 @@ public class ShopController {
                 "Singha Beer",
                 "Hello my firend, tasty cold beer, just for you special price",
                 "/images/singha.png",
-                20);
+                10);
 
-        return Arrays.asList(cup, coke, singha);
+        Item allegro = new Item(
+                "4",
+                "Kupon Allegro",
+                "Wszystko i nic - idealne żeby się zagracić",
+                "/images/allegro.png",
+                50);
+
+        Item rossman = new Item(
+                "5",
+                "Rossman",
+                "Kiedy potrzebujesz tylko wejść coś zobaczyć",
+                "/images/rossmann.jpg",
+                50);
+
+        Item hug = new Item(
+                "6",
+                "Przytulasek",
+                "Kiedy życie daje w kość",
+                "/images/hug.png",
+                1);
+
+        Item kiss = new Item(
+                "7",
+                "Buziaczek",
+                "Wyraz miłości od Twojej wyderki",
+                "/images/kiss.png",
+                1);
+
+        Item conversation = new Item(
+                "8",
+                "Szczera Rozmowa",
+                "Najelpsza żeby się wyżalić",
+                "/images/conversation.png",
+                1);
+
+        Item italianCookies = new Item(
+                "9",
+                "Fior di Cacao",
+                "Najsmaczniejszy dupoposzerzacz na południe od Tyrolu.",
+                "/images/italian-cookies.jpg",
+                35);
+
+        Item mcdonalds = new Item(
+                "10",
+                "McDonalds",
+                "Zamawiamy Wieśniaka",
+                "/images/mcdonalds.png",
+                25);
+
+        Item kimLong = new Item(
+                "11",
+                "Kim Long",
+                "Smaki Azji",
+                "/images/kim-long.png",
+                25);
+
+        Item hebe = new Item(
+                "12",
+                "Hebe",
+                "Gorszy Rossmann",
+                "/images/hebe.png",
+                50);
+
+        return Arrays.asList(cup, coke, singha, allegro, rossman, hug, kiss, conversation, italianCookies, mcdonalds, kimLong, hebe);
     }
 }
