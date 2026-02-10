@@ -1,57 +1,29 @@
 package otter.benefitportal.shop;
 
-import com.azure.cosmos.CosmosClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/shop")
 public class ShopController {
 
-    //private final CosmosClient cosmosClient;
+    private final static Cart cart = new Cart();
 
-   // public ShopController(CosmosClient cosmosClient) {
-        //this.cosmosClient = cosmosClient;
-   // }
+    @GetMapping("/cart/all")
+    public Map<String, Integer> getCart() {
+        return cart.getItemsForUser("temp-id");
+    }
 
     @PostMapping("/cart/add")
-    public void addToCart() {
-
+    public void addToCart(@RequestParam(name = "itemId") Item itemId) {
+        cart.addItem("temp-id", itemId, 1);
     }
 
     @GetMapping("/allProducts")
     public List<Item> getAll() {
-        /*
-        try {
-            String sql = "SELECT * FROM c;";
-
-            SqlQuerySpec querySpec = new SqlQuerySpec(sql, (List<SqlParameter>) null);
-
-            List<Item> items = new ArrayList<>();
-
-            CosmosContainer container = cosmosClient
-                    .getDatabase("shop")
-                    .getContainer("products");
-
-            CosmosPagedIterable<Item> result = container
-                    .queryItems(querySpec, new CosmosQueryRequestOptions(), Item.class);
-
-            result.stream().forEach(items::add);
-
-            return items;
-
-        } catch (Exception e) {
-            System.err.println("Error retrieving all items: " + e.getMessage());
-            throw new RuntimeException("Failed to retrieve all items", e);
-        }
-    }
-         */
-
         Item badge = new Item(
                 "1",
                 "Premium Badge",
@@ -73,7 +45,6 @@ public class ShopController {
                 "https://example.com/gym.png",
                 2999);   // 29.99 USD
 
-        // 2️⃣  Return them as a list
         return Arrays.asList(badge, coffee, gym);
     }
 }
