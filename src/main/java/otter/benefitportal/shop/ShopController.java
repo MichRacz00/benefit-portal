@@ -28,21 +28,21 @@ public class ShopController {
                 "1",
                 "Premium Badge",
                 "Earned by completing 10 benefits",
-                "https://example.com/badge.png",
+                "https://picsum.photos/600/400?random=1&category=business",
                 499);   // 4.99 USD
 
         Item coffee = new Item(
                 "2",
                 "Free Coffee",
                 "One free coffee per month",
-                "https://example.com/coffee.png",
+                "https://picsum.photos/600/400?random=2&category=food",
                 0);      // free
 
         Item gym = new Item(
                 "3",
                 "Gym Pass",
                 "Unlimited gym access for 3 months",
-                "https://example.com/gym.png",
+                "https://picsum.photos/600/400?random=3&category=sports",
                 2999);   // 29.99 USD
 
         return Arrays.asList(badge, coffee, gym);
