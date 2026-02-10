@@ -1,57 +1,29 @@
-
-function attachAddToCartListeners() {
-    const buttons = document.querySelectorAll('.btn-add-to-cart');
-    buttons.forEach(button => {
-        button.addEventListener('click', event => {
-            const itemId = event.target.dataset.itemId;
-            addItemToCart(itemId, event.target);
-        });
-    });
-}
-
 /**
- * Sends a request to the backend to add an item to the cart.
- * @param {string} itemId - The ID of the item to add.
- * @param {HTMLElement} buttonElement - The button that was clicked.
+ * Handles clicks on "Add to Cart" buttons using event delegation.
  */
-function addItemToCart(itemId, buttonElement) {
-    // Provide visual feedback that something is happening.
-    buttonElement.textContent = 'Adding...';
-    buttonElement.disabled = true;
-
-    Console.log("test");
-
-    // The endpoint expects the itemId as a request parameter.
-    const url = `/shop/cart/add?itemId=${encodeURIComponent(itemId)}`;
-
-    fetch(url, {
-        method: 'POST',
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to add item to cart.');
-        }
-        // Success! Provide feedback to the user.
-        buttonElement.textContent = 'Added!';
-        setTimeout(() => {
-            buttonElement.textContent = 'Add to Cart';
-            buttonElement.disabled = false;
-        }, 1500); // Reset button after 1.5 seconds
-    })
-    .catch(error => {
-        console.error('Add to cart error:', error);
-        buttonElement.textContent = 'Error!';
-        // Optionally, reset the button so the user can try again.
-        setTimeout(() => {
-            buttonElement.textContent = 'Add to Cart';
-            buttonElement.disabled = false;
-        }, 2000);
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const productsContainer = document.querySelector('.products');
 
+    if (!productsContainer) {
+        console.error('Products container not found');
+        return;
+    }
+
+    // ✅ Event delegation: one listener for all current & future buttons
+    productsContainer.addEventListener('click', event => {
+        const button = event.target.closest('.btn-add-to-cart');
+        if (!button) return;
+
+        const itemId = button.dataset.itemId;
+        if (!itemId) {
+            console.error('Missing itemId on button');
+            return;
+        }
+
+        addItemToCart(itemId, button);
+    });
+
+    // Fetch and render products
     fetch('/shop/allProducts')
         .then(response => {
             if (!response.ok) {
@@ -60,8 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(products => {
-            if (products.length === 0) {
-                productsContainer.innerHTML = '<p>No products available at the moment.</p>';
+            if (!products.length) {
+                productsContainer.innerHTML =
+                    '<p>No products available at the moment.</p>';
                 return;
             }
 
@@ -69,10 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
-                const formattedPrice = (product.price / 100).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                });
+                const formattedPrice = (product.price / 100).toLocaleString(
+                    'en-US',
+                    {
+                        style: 'currency',
+                        currency: 'USD',
+                    }
+                );
 
                 card.innerHTML = `
                     <img src="${product.image}" alt="${product.title}" class="product-image">
@@ -81,7 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="product-content">${product.content}</p>
                         <div class="product-footer">
                             <span class="product-price">${formattedPrice}</span>
-                            <button class="choose-btn btn btn-outline">Choose</button>
+                            <button
+                                class="choose-btn btn btn-outline btn-add-to-cart"
+                                data-item-id="${product.id}">
+                                Choose
+                            </button>
                         </div>
                     </div>
                 `;
@@ -91,8 +71,40 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Failed to fetch products:', error);
-            productsContainer.innerHTML = '<p class="error-message">Could not load products. Please try again later.</p>';
+            productsContainer.innerHTML =
+                '<p class="error-message">Could not load products.</p>';
         });
-
-        attachAddToCartListeners();
 });
+
+/**
+ * Sends a request to the backend to add an item to the cart.
+ */
+function addItemToCart(itemId, button) {
+    console.log('Adding item:', itemId);
+
+    button.textContent = 'Adding...';
+    button.disabled = true;
+
+    fetch(`/shop/cart/add?itemId=${encodeURIComponent(itemId)}`, {
+        method: 'POST',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to add item to cart');
+            }
+
+            button.textContent = 'Added!';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+                button.disabled = false;
+            }, 1500);
+        })
+        .catch(error => {
+            console.error('Add to cart error:', error);
+            button.textContent = 'Error!';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+                button.disabled = false;
+            }, 2000);
+        });
+}
