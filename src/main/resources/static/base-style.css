@@ -9,7 +9,7 @@
 
 /* 1️⃣  Theme variables ------------------------------------------------ */
 :root {
-    --font-size: 330%;
+    --font-size: 275%;
     font-size: var(--font-size);
 
     /* Primary brand colour – feel free to replace with your own */
