@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BenefitPortalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BenefitPortalApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BenefitPortalApplication.class, args);
+    }
 
 }

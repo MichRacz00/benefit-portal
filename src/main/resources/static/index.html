@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Web Store</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+    <h1>🛒 Simple Web Store</h1>
+    <div class="cart">
+        <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
+    </div>
+</header>
+
+<main>
+    <div id="products-container" class="products"></div>
+</main>
+
+<div id="cart-modal" class="cart-modal hidden">
+    <div class="cart-content">
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <p>Total: $<span id="cart-total">0</span></p>
+        <button id="checkout-btn">Checkout</button>
+        <button id="close-cart">Close</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
