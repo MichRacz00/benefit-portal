@@ -42,21 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
-                const formattedPrice = (product.price / 100).toLocaleString(
-                    'en-US',
-                    {
-                        style: 'currency',
-                        currency: 'USD',
-                    }
-                );
-
                 card.innerHTML = `
                     <img src="${product.image}" alt="${product.title}" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">${product.title}</h3>
                         <p class="product-content">${product.content}</p>
                         <div class="product-footer">
-                            <span class="product-price">${formattedPrice}</span>
+                            <span class="product-price">Cena: ${product.price}❤️</span>
                             <button
                                 class="choose-btn btn btn-outline btn-add-to-cart"
                                 data-item-id="${product.id}">

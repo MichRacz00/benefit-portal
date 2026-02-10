@@ -24,27 +24,27 @@ public class ShopController {
 
     @GetMapping("/allProducts")
     public List<Item> getAll() {
-        Item badge = new Item(
+        Item cup = new Item(
                 "1",
                 "Kubek Ocipieje",
-                "Earned by completing 10 benefits",
+                "Powiedz innym co czujesz tym prestiżowym kubkiem z firmy Niejebajka. Specjał Walentynkowy!",
                 "/images/cup.webp",
                 50);
 
-        Item coffee = new Item(
+        Item coke = new Item(
                 "2",
-                "Free Coffee",
-                "One free coffee per month",
-                "https://picsum.photos/600/400?random=2&category=food",
-                0);      // free
+                "Cola Zero",
+                "Codzienny napój na lepszy humor. Najlepiej smakuje schłodzony. 330ml, puszka zwrotna.",
+                "/images/coke-zero.png",
+                1);
 
-        Item gym = new Item(
+        Item singha = new Item(
                 "3",
-                "Gym Pass",
-                "Unlimited gym access for 3 months",
-                "https://picsum.photos/600/400?random=3&category=sports",
-                2999);   // 29.99 USD
+                "Singha Beer",
+                "Hello my firend, tasty cold beer, just for you special price",
+                "/images/singha.png",
+                20);
 
-        return Arrays.asList(badge, coffee, gym);
+        return Arrays.asList(cup, coke, singha);
     }
 }
