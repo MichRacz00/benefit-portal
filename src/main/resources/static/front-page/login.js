@@ -1,6 +1,8 @@
 
-const chooseStickyNoteButton = document.getElementById('loginButton');
+document.addEventListener("DOMContentLoaded", () => {
+    const loginButton = document.getElementById('loginButton');
 
-chooseStickyNoteButton.addEventListener("click", () => {
-    window.location.href = "/shop/shop.html";
+    loginButton.addEventListener("click", () => {
+        window.location.href = "/shop/shop.html";
+    });
 });
