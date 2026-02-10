@@ -1,0 +1,173 @@
+/* -------------------------------------------------------------
+   styles.css
+   -------------------------------------------------------------
+   • Centralised colour palette
+   • Basic typographic colours
+   • Utility classes for buttons, links, cards, etc.
+   • Light theme (default) + optional dark‑mode toggle
+   ------------------------------------------------------------ */
+
+/* 1️⃣  Theme variables ------------------------------------------------ */
+:root {
+    --font-size: 330%;
+    font-size: var(--font-size);
+
+    /* Primary brand colour – feel free to replace with your own */
+    --color-primary:   #0066cc;   /* rich blue */
+    --color-primary-2: #005bb5;   /* darker variant for hover */
+    --color-primary-3: #0077ff;   /* lighter variant for accents */
+
+  /* Secondary accent colour (e.g. for call‑to‑action or highlights) */
+  --color-secondary: #ff9900;   /* warm orange */
+
+  /* Neutral palette */
+  --color-white:      #ffffff;
+  --color-lightgrey:  #f5f5f5;
+  --color-grey:       #cccccc;
+  --color-darkgrey:   #666666;
+  --color-black:      #000000;
+
+  /* Backgrounds */
+  --bg-default:      var(--color-white);
+  --bg-light:        var(--color-lightgrey);
+  --bg-dark:         var(--color-darkgrey);
+
+  /* Text colours */
+  --text-primary:    var(--color-black);
+  --text-secondary:  var(--color-darkgrey);
+  --text-light:      var(--color-lightgrey);
+
+  /* Misc */
+  --radius:          4px;
+  --transition-speed: 0.25s;
+}
+
+/* 2️⃣  Base styles --------------------------------------------------- */
+body {
+  overflow-x: hidden;               /* 1️⃣ */
+  min-height: 100vh;                /* 6️⃣ */
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+a:hover,
+a:focus {
+  color: var(--color-primary-2);
+  text-decoration: underline;
+}
+
+/* 3️⃣  Utility classes ------------------------------------------------ */
+.btn {
+    font-size: 1rem;
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    min-width: 4em;
+    min-height: 1.5em;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-primary-2);
+}
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: var(--color-secondary); /* same shade – adjust if you prefer a darker hue */
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+.btn-outline:hover,
+.btn-outline:focus {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* 5️⃣  Components ----------------------------------------------------- */
+header, footer {
+  background-color: var(--bg-light);
+  padding: 1rem 0;
+}
+header a, footer a {
+  color: var(--text-secondary);
+}
+header a:hover, footer a:hover {
+  color: var(--color-primary);
+}
+
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+}
+.card-header {
+  background-color: var(--bg-light);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-footer {
+  background-color: var(--bg-light);
+  padding: 0.75rem 1rem;
+  text-align: right;
+}
+
+/* 6️⃣  Forms --------------------------------------------------------- */
+label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-grey);
+  border-radius: var(--radius);
+  transition: border-color var(--transition-speed);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* 7️⃣  Responsive helpers ------------------------------------------- */
+@media (max-width: 768px) {
+  .flex-column {
+    flex-direction: column;
+  }
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;       /* stack elements vertically */
+    justify-content: center;      /* vertical centering */
+    align-items: center;          /* horizontal centering */
+    height: 100vh;                /* fill the viewport */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FrontPageController {
 
-    @RequestMapping
+    @RequestMapping("/")
     public String index() {
-        return "/index.html";
+        return "/front-page/front-page.html";
     }
 }
