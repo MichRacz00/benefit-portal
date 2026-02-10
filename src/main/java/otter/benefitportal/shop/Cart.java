@@ -2,25 +2,112 @@ package otter.benefitportal.shop;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @Service
 public class Cart {
-    private final Map<String, Map<String, Integer>> allUserItems = new ConcurrentHashMap<>();
-    private final Map<String, Integer> allUserCartValues = new ConcurrentHashMap<>();
+    // userId -> (itemId -> quantity)
+    private final Map<String, Map<Integer, Integer>> allUserItems = new ConcurrentHashMap<>();
 
-    public void addItem(String userId, Item item, int quantity) {
-        Map<String, Integer> userItems = allUserItems.computeIfAbsent(userId, k -> new ConcurrentHashMap<>());
-        userItems.merge(item.getId(), quantity, Integer::sum);
-        allUserCartValues.merge(userId, item.getPrice() * quantity, Integer::sum);
+    public void addItem(String userId, int itemId, int quantity) {
+        Map<Integer, Integer> userItems = allUserItems.computeIfAbsent(userId, k -> new ConcurrentHashMap<>());
+        userItems.merge(itemId, quantity, Integer::sum);
     }
 
-    public int getCartValue(String userId) {
-        return allUserCartValues.getOrDefault(userId, 0);
+    public Map<Integer, Integer> getItemsForUser(String userId) {
+        return allUserItems.getOrDefault(userId, Map.of());
     }
 
-    public Map<String, Integer> getItemsForUser(String userId) {
-        return allUserItems.get(userId);
+    public List<Item> getAllItems() {
+        Item cup = new Item(
+                "1",
+                "Kubek Ocipieje",
+                "Powiedz innym co czujesz tym prestiżowym kubkiem z firmy Niejebajka. Specjał Walentynkowy!",
+                "/images/cup.webp",
+                50);
+
+        Item coke = new Item(
+                "2",
+                "Cola Zero",
+                "Codzienny napój na lepszy humor. Najlepiej smakuje schłodzony. 330ml, puszka zwrotna.",
+                "/images/coke-zero.png",
+                1);
+
+        Item singha = new Item(
+                "3",
+                "Singha Beer",
+                "Hello my firend, tasty cold beer, just for you special price",
+                "/images/singha.png",
+                10);
+
+        Item allegro = new Item(
+                "4",
+                "Kupon Allegro",
+                "Wszystko i nic - idealne żeby się zagracić",
+                "/images/allegro.png",
+                50);
+
+        Item rossman = new Item(
+                "5",
+                "Rossman",
+                "Kiedy potrzebujesz tylko wejść coś zobaczyć",
+                "/images/rossmann.jpg",
+                50);
+
+        Item hug = new Item(
+                "6",
+                "Przytulasek",
+                "Kiedy życie daje w kość",
+                "/images/hug.png",
+                1);
+
+        Item kiss = new Item(
+                "7",
+                "Buziaczek",
+                "Wyraz miłości od Twojej wyderki",
+                "/images/kiss.png",
+                1);
+
+        Item conversation = new Item(
+                "8",
+                "Szczera Rozmowa",
+                "Najelpsza żeby się wyżalić",
+                "/images/conversation.png",
+                1);
+
+        Item italianCookies = new Item(
+                "9",
+                "Fior di Cacao",
+                "Najsmaczniejszy dupoposzerzacz na południe od Tyrolu.",
+                "/images/italian-cookies.jpg",
+                35);
+
+        Item mcdonalds = new Item(
+                "10",
+                "McDonalds",
+                "Zamawiamy Wieśniaka",
+                "/images/mcdonalds.png",
+                25);
+
+        Item kimLong = new Item(
+                "11",
+                "Kim Long",
+                "Smaki Azji",
+                "/images/kim-long.png",
+                25);
+
+        Item hebe = new Item(
+                "12",
+                "Hebe",
+                "Gorszy Rossmann",
+                "/images/hebe.png",
+                50);
+
+        return Arrays.asList(cup, coke, singha, allegro, rossman, hug, kiss, conversation, italianCookies, mcdonalds, kimLong, hebe);
     }
 }
