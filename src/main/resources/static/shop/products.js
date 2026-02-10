@@ -1,53 +1,47 @@
-/* ──────  Product data (replace with real API data if needed) ────── */
-const products = [
-  { id: 1, title: "Basic Plan", price: "$19.99", img: "https://picsum.photos/300/200?random=1" },
-  { id: 2, title: "Standard Plan", price: "$29.99", img: "https://picsum.photos/300/200?random=2" },
-  { id: 3, title: "Premium Plan", price: "$49.99", img: "https://picsum.photos/300/200?random=3" },
-  { id: 4, title: "Enterprise Plan", price: "$99.99", img: "https://picsum.photos/300/200?random=4" }
-];
-
-/* ──────  Render products  ────── */
-const container = document.querySelector('.products');
-products.forEach(p => {
-  const card = document.createElement('div');
-  card.className = 'product-card';
-  card.dataset.id = p.id;
-
-  card.innerHTML = `
-    <img src="${p.img}" alt="${p.title}">
-    <div class="info">
-      <h3 class="title">${p.title}</h3>
-      <p class="price">${p.price}</p>
-      <button class="choose-btn btn btn-outline">Choose</button>
-    </div>
-  `;
-
-  // Click anywhere on the card to select
-  card.addEventListener('click', () => selectProduct(p.id));
-
-  container.appendChild(card);
-});
-
-/* ──────  Selection logic  ────── */
-let selectedId = null;
-
-function selectProduct(id) {
-  selectedId = id;
-  localStorage.setItem('selectedProduct', id);
-
-  // Highlight the selected card
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.classList.toggle('selected', Number(card.dataset.id) === id);
-  });
-
-  // Show the “Proceed” button
-  document.getElementById('proceedBtn').style.display = 'block';
-}
-
-/* ──────  On page load, restore selection if already stored  ────── */
 document.addEventListener('DOMContentLoaded', () => {
-  const stored = localStorage.getItem('selectedProduct');
-  if (stored) {
-    selectProduct(Number(stored));
-  }
+
+    const productsContainer = document.querySelector('.products');
+
+    fetch('/shop/allProducts')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(products => {
+            if (products.length === 0) {
+                productsContainer.innerHTML = '<p>No products available at the moment.</p>';
+                return;
+            }
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+
+                const formattedPrice = (product.price / 100).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                });
+
+                card.innerHTML =
+                `
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-content">${product.content}</p>
+                        <div class="product-footer">
+                            <span class="product-price">${formattedPrice}</span>
+                            <button class="btn-add-to-cart" data-item-id="${product.id}">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+
+                productsContainer.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Failed to fetch products:', error);
+            productsContainer.innerHTML = '<p class="error-message">Could not load products. Please try again later.</p>';
+        });
 });
